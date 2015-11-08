@@ -1,0 +1,5 @@
+{{> head}}
+
+Hello my name is {{ name }}
+
+{{> foot}}

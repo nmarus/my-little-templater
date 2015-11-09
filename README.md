@@ -1,4 +1,4 @@
-#My Little Templater v1.0.2
+# My Little Templater v1.0.3
 
 ![NPM Build Status](https://travis-ci.org/nmarus/my-little-templater.svg?branch=master)
 
@@ -6,15 +6,15 @@ My-Little-Templater is a simple templating utility that can be used for construc
 
 This can be used to generate anything from shell scripts, to html pages, to Cisco IOS configurations. Anything that can be applied to a template can easily be generated using simple [{{ mustache }}](https://mustache.github.io/) syntax.
 
-###Requirements:
+### Requirements:
 
  - nodejs 0.12 or newer
 
-###Install:
+### Install:
 
     npm install my-little-templater -g
 
-###Usage:
+### Usage:
 
     Usage: mlt [options] <output filename>
 
@@ -26,9 +26,9 @@ This can be used to generate anything from shell scripts, to html pages, to Cisc
     -p, --parts    [value]  Directory containing template parts
     -y, --yaml     [value]  YAML filename
 
-###Example(s):
+### Example(s):
 
-####Sample Folder Structure:
+#### Sample Folder Structure:
 
     ├── partials
     │   ├── foot.part
@@ -69,7 +69,7 @@ This can be used to generate anything from shell scripts, to html pages, to Cisc
     favorite_food: "Pizza"
     favorite_drink: "Diet Coke"
 
-####Render:
+#### Render:
 
     $ mlt -t templates/test.template -p partials -y test.yml out.html
 

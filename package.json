@@ -1,0 +1,31 @@
+{
+  "name": "my-little-templater",
+  "version": "1.0.0",
+  "description": "Simple Static Templating",
+  "main": "bin/mlt",
+  "preferGlobal": true,
+  "scripts": {
+    "test": "bin/mlt -t tests/templates/test.template -p tests/partials -y tests/test.yml tests/out",
+    "posttest": "rm tests/out"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nmarus/my-little-templater.git"
+  },
+  "author": "Nicholas Marus <nmarus@gmail.com> (http://nicholasmarus.com)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/nmarus/my-little-templater/issues"
+  },
+  "homepage": "https://github.com/nmarus/my-little-templater#readme",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "js-yaml": "^3.2.2",
+    "mustache": "^1.2.0"
+  },
+  "keywords": [
+    "template",
+    "mustache",
+    "static"
+  ]
+}

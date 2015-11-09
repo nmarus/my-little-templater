@@ -1,0 +1,95 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+var mustache = require('mustache');
+var yaml = require('js-yaml');
+var fs = require('fs');
+
+var pkg = require('../package.json');
+var version = pkg.version;
+
+// Get Command Line Args
+// program.template
+// program.parts
+// program.yaml
+// program.args
+program
+    .version(version)
+    .usage('[options] <output filename>')
+    .option('-t, --template [value]', 'Template filename')
+    .option('-p, --parts    [value]', 'Directory containing template parts')
+    .option('-y, --yaml     [value]', 'YAML filename')
+    .parse(process.argv);
+
+// Output Filename
+var out = program.args.shift() || './mlt.out';
+
+//Help and Exit
+function helpExit(message) {
+    console.log('Error: ' + message);
+    program.help();
+    process.exit(1);
+}
+
+// Validate path is a file
+// return true or false
+function fileExists(path) {
+    try { return fs.statSync(path).isFile(); }
+    catch(err) { return false; }
+}
+
+// Validate path is a dir
+// return true or false
+function dirExists(path) {
+    try { return fs.statSync(path).isDirectory(); }
+    catch(err) { return false; }
+}
+
+// Validate YAML
+// return true or false
+function isYAML(path) {
+    try { yaml.safeLoad(fs.readFileSync(path, 'utf8')); return true; }
+    catch(err) { return false; }
+}
+
+// Render Template
+function renderTemplate(t, y, o, p) {
+    // Load yaml
+    y = yaml.safeLoad(fs.readFileSync(y, 'utf8'));
+
+    // Load template and pre-parse
+    t = fs.readFileSync(t, 'utf8');
+    mustache.parse(t);
+
+    //check if --parts argument passed
+    if (typeof p === 'undefined') {
+        // Render
+        var rendered = mustache.render(t,y);
+        if (fs.writeFileSync(o,rendered) != undefined) helpExit('Could not write to output file!');
+    } else {
+        // Create array of file in dir p
+        var pl = fs.readdirSync(p);
+
+        // Create object for partials
+        var po = {};
+
+        // populate object po
+        pl.forEach(function(element, index, array) {
+            po[element.substring(0, element.search(/\./))] = fs.readFileSync(p + '/' + element, 'utf8');
+        });
+
+        // Render
+        var rendered = mustache.render(t,y,po);
+        if (fs.writeFileSync(o,rendered) != undefined) helpExit('Could not write to output file!');
+    }
+}
+
+// Check for required args and validate
+if (!fileExists(program.template)) helpExit('Template not specified!');
+if (program.parts != undefined && !dirExists(program.parts)) helpExit('Specified parts directory invalid!');
+if (!fileExists(program.yaml) || !isYAML(program.yaml)) helpExit('YAML file not specified or invalid!');
+if (fileExists(out)) helpExit('Destination file currently exists!');
+
+// Render template
+renderTemplate(program.template, program.yaml, out, program.parts);
+console.log('Completed successfully.');

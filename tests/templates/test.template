@@ -1,5 +1,7 @@
 {{> head}}
 
-Hello my name is {{ name }}
+    <h1>Hello {{name}}!</h1>
+
+    <p>I see you like {{favorite_food}} and {{favorite_drink}}! I do too! What are the odds?</p>
 
 {{> foot}}

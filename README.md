@@ -1,4 +1,4 @@
-#My Little Templater v1.0.0
+#My Little Templater v1.0.1
 
 ![NPM Build Status](https://travis-ci.org/nmarus/my-little-templater.svg?branch=master)
 

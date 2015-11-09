@@ -1,9 +1,12 @@
 {
   "name": "my-little-templater",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple Static Templating",
   "main": "bin/mlt",
   "preferGlobal": true,
+  "bin": {
+    "mlt": "./bin/mlt"
+  },
   "scripts": {
     "test": "bin/mlt -t tests/templates/test.template -p tests/partials -y tests/test.yml tests/out.html",
     "posttest": "rm tests/out.html"

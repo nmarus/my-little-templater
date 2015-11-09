@@ -1,6 +1,6 @@
 {
   "name": "my-little-templater",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Simple Static Templating",
   "main": "bin/mlt",
   "preferGlobal": true,

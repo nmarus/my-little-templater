@@ -5,8 +5,8 @@
   "main": "bin/mlt",
   "preferGlobal": true,
   "scripts": {
-    "test": "bin/mlt -t tests/templates/test.template -p tests/partials -y tests/test.yml tests/out",
-    "posttest": "rm tests/out"
+    "test": "bin/mlt -t tests/templates/test.template -p tests/partials -y tests/test.yml tests/out.html",
+    "posttest": "rm tests/out.html"
   },
   "repository": {
     "type": "git",

@@ -1,7 +1,7 @@
 {
   "name": "my-little-templater",
-  "version": "1.0.3",
-  "description": "Simple Static Templating",
+  "version": "1.0.5",
+  "description": "Simple Static Templating CLI Tool",
   "main": "bin/mlt",
   "preferGlobal": true,
   "bin": {
@@ -23,12 +23,13 @@
   "homepage": "https://github.com/nmarus/my-little-templater#readme",
   "dependencies": {
     "commander": "^2.9.0",
-    "js-yaml": "^3.2.2",
-    "mustache": "^1.2.0"
+    "js-yaml": "^3.4.3",
+    "mustache": "^2.2.0"
   },
   "keywords": [
     "template",
     "mustache",
-    "static"
+    "static",
+    "CLI"
   ]
 }

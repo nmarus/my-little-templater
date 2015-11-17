@@ -1,4 +1,4 @@
-# My Little Templater v1.0.3
+# My Little Templater v1.0.5
 
 ![NPM Build Status](https://travis-ci.org/nmarus/my-little-templater.svg?branch=master)
 
@@ -16,15 +16,15 @@ This can be used to generate anything from shell scripts, to html pages, to Cisc
 
 ### Usage:
 
-    Usage: mlt [options] <output filename>
+    Usage: mlt [options] [<output filename> | - ]
 
     Options:
 
     -h, --help              output usage information
     -V, --version           output the version number
     -t, --template [value]  Template filename
-    -p, --parts    [value]  Directory containing template parts
     -y, --yaml     [value]  YAML filename
+    -p, --parts    [value]  Directory containing template parts (Optional)
 
 ### Example(s):
 
@@ -81,11 +81,7 @@ This can be used to generate anything from shell scripts, to html pages, to Cisc
 
         <h1>Hello Joe Smith!</h1>
 
-        <p>
-        I see you like Pizza and
-        Diet Coke! I do too! What are
-        the odds?
-        </p>
+        <p>I see you like Pizza and Diet Coke! I do too! What are the odds?</p>
 
         </body>
     </html>

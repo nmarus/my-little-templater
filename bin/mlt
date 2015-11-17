@@ -15,14 +15,14 @@ var version = pkg.version;
 // program.args
 program
     .version(version)
-    .usage('[options] <output filename>')
+    .usage('[options] [<output filename> | - ]')
     .option('-t, --template [value]', 'Template filename')
-    .option('-p, --parts    [value]', 'Directory containing template parts')
     .option('-y, --yaml     [value]', 'YAML filename')
+    .option('-p, --parts    [value]', 'Directory containing template parts (Optional)')
     .parse(process.argv);
 
 // Output Filename
-var out = program.args.shift() || './mlt.out';
+var output = program.args.shift();
 
 //Help and Exit
 function helpExit(message) {
@@ -53,34 +53,51 @@ function isYAML(path) {
 }
 
 // Render Template
-function renderTemplate(t, y, o, p) {
-    // Load yaml
-    y = yaml.safeLoad(fs.readFileSync(y, 'utf8'));
+function renderTemplate(t, y, p, o) {
+
+    var template = t;
+    var yamlfile = y;
+    var partsdir = p;
+    var outfile = o;
+
+    var rendered;
 
     // Load template and pre-parse
-    t = fs.readFileSync(t, 'utf8');
+    template = fs.readFileSync(t, 'utf8');
     mustache.parse(t);
 
+    // Load yaml
+    yamlfile = yaml.safeLoad(fs.readFileSync(y, 'utf8'));
+
     //check if --parts argument passed
-    if (typeof p === 'undefined') {
+    if (!partsdir) {
         // Render
-        var rendered = mustache.render(t,y);
-        if (fs.writeFileSync(o,rendered) != undefined) helpExit('Could not write to output file!');
+        rendered = mustache.render(template,yamlfile);
     } else {
         // Create array of file in dir p
-        var pl = fs.readdirSync(p);
+        var pl = fs.readdirSync(partsdir);
 
         // Create object for partials
         var po = {};
 
         // populate object po
         pl.forEach(function(element, index, array) {
-            po[element.substring(0, element.search(/\./))] = fs.readFileSync(p + '/' + element, 'utf8');
+            po[element.substring(0, element.search(/\./))] = fs.readFileSync(partsdir + '/' + element, 'utf8');
         });
 
         // Render
-        var rendered = mustache.render(t,y,po);
-        if (fs.writeFileSync(o,rendered) != undefined) helpExit('Could not write to output file!');
+        rendered = mustache.render(template,yamlfile,po);
+    }
+    if(outfile == '-' || outfile == null) {
+        console.log(rendered);
+    } else {
+        if(!fileExists(outfile)) {
+            fs.writeFileSync(outfile,rendered)
+            console.log('Completed successfully.');
+        } else {
+            helpExit('Could not write to output file! It either exists, or is invalid.');
+        }
+
     }
 }
 
@@ -88,8 +105,7 @@ function renderTemplate(t, y, o, p) {
 if (!fileExists(program.template)) helpExit('Template not specified!');
 if (program.parts != undefined && !dirExists(program.parts)) helpExit('Specified parts directory invalid!');
 if (!fileExists(program.yaml) || !isYAML(program.yaml)) helpExit('YAML file not specified or invalid!');
-if (fileExists(out)) helpExit('Destination file currently exists!');
+
 
 // Render template
-renderTemplate(program.template, program.yaml, out, program.parts);
-console.log('Completed successfully.');
+renderTemplate(program.template, program.yaml, program.parts, output);

@@ -12,76 +12,93 @@ This can be used to generate anything from shell scripts, to html pages, to Cisc
 
 ### Install:
 
-    npm install my-little-templater -g
+```bash
+npm install my-little-templater -g
+```
 
 ### Usage:
 
-    Usage: mlt [options] [<output filename> | - ]
+```bash
+Usage: mlt [options] [<output filename> | - ]
 
-    Options:
+Options:
 
-    -h, --help              output usage information
-    -V, --version           output the version number
-    -t, --template [value]  Template filename
-    -y, --yaml     [value]  YAML filename
-    -p, --parts    [value]  Directory containing template parts (Optional)
+-h, --help              output usage information
+-V, --version           output the version number
+-t, --template [value]  Template filename
+-y, --yaml     [value]  YAML filename
+-p, --parts    [value]  Directory containing template parts (Optional)
+```
 
 ### Example(s):
 
 #### Sample Folder Structure:
 
-    ├── partials
-    │   ├── foot.part
-    │   └── head.part
-    ├── templates
-    │   └── test.template
-    └── test.yml
+```bash
+├── partials
+│   ├── foot.part
+│   └── head.part
+├── templates
+│   └── test.template
+└── test.yml
+```
 
 ***File: "partials/head.part"***
 
-    <html>
-    <head><title>Hello {{name}}!</title></head>
-    <body>
-
+```html
+ <html>
+     <head><title>Hello {{name}}!</title></head>
+     <body>
+```
 
 ***File: "partials/foot.part"***
 
+```html
     </body>
-    </html>
+</html>
+```
 
 ***File: "templates/test.template"***
 
-    {{> head}}
+```html
+{{> head}}
 
-        <h1>Hello {{name}}!</h1>
+    <h1>Hello {{name}}!</h1>
 
-        <p>
-        I see you like {{favorite_food}} and
-        {{favorite_drink}}! I do too! What are
-        the odds?
-        </p>
+    <p>
+    I see you like {{favorite_food}} and
+    {{favorite_drink}}! I do too! What are
+    the odds?
+    </p>
 
-    {{> foot}}
+{{> foot}}
+```
 
 ***File: "test.yml"***
 
-    name: "Joe Smith"
-    favorite_food: "Pizza"
-    favorite_drink: "Diet Coke"
+```yml
+name: "Joe Smith"
+favorite_food: "Pizza"
+favorite_drink: "Diet Coke"
+```
 
 #### Render:
 
-    $ mlt -t templates/test.template -p partials -y test.yml out.html
+```bash
+mlt -t templates/test.template -p partials -y test.yml out.html
+```
 
 ***File: "out.html"***
 
-    <html>
-        <head><title>Hello Joe Smith!</title></head>
-        <body>
+```html
+<html>
+    <head><title>Hello Joe Smith!</title></head>
+    <body>
 
-        <h1>Hello Joe Smith!</h1>
+    <h1>Hello Joe Smith!</h1>
 
-        <p>I see you like Pizza and Diet Coke! I do too! What are the odds?</p>
+    <p>I see you like Pizza and Diet Coke! I do too! What are the odds?</p>
 
-        </body>
-    </html>
+    </body>
+</html>
+```

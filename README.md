@@ -8,7 +8,7 @@ This can be used to generate anything from shell scripts, to html pages, to Cisc
 
 ### Requirements:
 
- - nodejs 0.12 or newer
+ - nodejs 0.10 or newer
 
 ### Install:
 
